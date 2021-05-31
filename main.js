@@ -5,34 +5,58 @@ const hole = 'O';
 const fieldCharacter = '░';
 const pathCharacter = '*';
 class field {
-    constructor(map){
-        this.map=map;        
+    constructor(height,width,percentage){
+        
+        this.height=height;
+        this.width=width;
+        this.percentage=percentage;
+        this.map=[];
     }
-    print(){
-        let i=0
-        for(i=0;i < this.map[0].length ;i++){
-            console.log(this.map[i].join(' '));
-        }
-    }
+    
     get maps(){
         return this.map;
     };
     set maps(a){
         this.map = a;
     };
+
+    print(){
+        let i=0
+        for(i=0;i < this.map[0].length ;i++){
+            console.log(this.map[i].join(' '));
+        }
+    }
+    generateField(){
+        let HatY=0;
+        let HatX=0;
+        do{
+        HatY=Math.floor(Math.random() * this.width);
+        HatX=Math.floor(Math.random() * this.height);
+        }while(HatY==0 && HatX==0);
+
+        for (let i=0 ;i<this.height ; i++)
+        {
+            for (let j=0; i<this.width ; j++){                
+            
+                let a= Math.floor(Math.random() * 100)
+                    if (a<this.percentage && this.map[i][j] !='^' ) {
+                    this.map[i][j]='O';
+                }
+                else if(this.map[i][j] !='^'){
+                    this.map[i][j]='░';
+                }
+            }
+        }
+    }
 }
-let myField = new field([
-    ['*', '░', 'O'],
-    ['░', 'O', '░'],
-    ['░', '^', '░'],
-  ]);
+let myField = new field(8,8,20);
   positionX=0;
   positionY=0;
-  
+  myField.generateField();
   while(true) {
    myField.print();
    
-   let trela=myField.maps;
+   let trela = myField.maps;
 
     const direc = prompt("What direction you will take ? r=right l=left d=down u=up :");
     
